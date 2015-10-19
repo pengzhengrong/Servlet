@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="springdemo" version="2.5">
+	
+	<servlet>
+		<servlet-name>test</servlet-name>
+		<servlet-class>action.Test</servlet-class>
+		<init-param>
+			<param-name>admin</param-name>
+			<param-value>pzr</param-value>
+		</init-param>
+		<init-param>
+			<param-name>email</param-name>
+			<param-value>pzr@163.com</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>test</servlet-name>
+		<url-pattern>/test.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>upload</servlet-name>
+		<servlet-class>action.upload</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>upload</servlet-name>
+		<url-pattern>/upload.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	<servlet>
+		<servlet-name>test2</servlet-name>
+		<servlet-class>action.Test2</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>test2</servlet-name>
+		<url-pattern>/test2.do</url-pattern>
+	</servlet-mapping>
+	
+	
+	
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/mytag</taglib-uri>
+			<taglib-location>/WEB-INF/mytag.tld</taglib-location>
+		</taglib>
+		<!-- <taglib>
+			<taglib-uri>/function</taglib-uri>
+			<taglib-location>/WEB-INF/function.tld</taglib-location>
+		</taglib> -->
+	</jsp-config>
+	
+	</web-app>

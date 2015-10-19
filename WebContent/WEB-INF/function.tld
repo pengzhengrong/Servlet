@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_1.xsd">
+	
+	<description>this is test</description>
+	
+	<tlib-version>1.0</tlib-version>
+	
+	<uri>/function</uri>
+	
+	<function>
+		<description>append test</description>
+		<name>append</name>
+		<function-class>action.elTest</function-class>
+		<function-signature>
+			java.lang.String appendString()
+		</function-signature>
+	</function>
+	
+	</taglib>
