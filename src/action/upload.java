@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -25,13 +26,45 @@ public class upload extends HttpServlet{
 		// TODO Auto-generated method stub
 		//super.doPost(req, resp);
 		
-//		InputStream is = req.getInputStream();
-		
-		
+		//获取上传的文件名称
+//		String fileNameA = req.getParameter("filename");
+//		int lastIndex = fileNameA.lastIndexOf("\\");
+//		String fileName = fileNameA.substring(lastIndex+1);
+		String fileName = "test.txt";
+		//设定文件保存的路径
+		String savePath = "/home/save/"+fileName;
+		//读取文件内容
+		InputStream is = req.getInputStream();
+		DataInputStream dis = new DataInputStream(is);
+		int dataLength = req.getContentLength();
+		String contentType = req.getHeader("Content-Type");
+		System.out.println("ContentType:"+contentType);
+		Enumeration<String> names = req.getHeaderNames();
+		while(names.hasMoreElements()){
+			System.out.println(names.nextElement());
+		}
+		//写入读取的内容
+		int length = 0;
+		int count = 0;
+		byte[] bs = new byte[1024];
+		if( count < dataLength ){
+			System.out.println(count+"--"+length);
+			length = dis.read(bs, length, 1024);
+			count += length;
+		}
+		File outFile = new File(savePath);
+		if(outFile.exists()){
+			outFile.createNewFile();
+		}
+		FileOutputStream fos = new FileOutputStream(outFile);
+		fos.write(bs);
+		fos.close();
+		dis.close();
+		is.close();
 		Writer w = resp.getWriter();
-		String s = req.getParameter("filename");
-		System.out.println(s);	
-		//w.write("test");
+		//String s = req.getParameter("filename");
+		//System.out.println(s);	
+		w.write("test");
 		
 		
 		
@@ -42,8 +75,8 @@ public class upload extends HttpServlet{
 		
 		
 		
-		/*//���ص���Դ���
-		InputStream in = req.getInputStream();
+		//���ص���Դ���
+		/*InputStream in = req.getInputStream();
 		int dataLength = req.getContentLength();
 		DataInputStream dis = new DataInputStream(in);
 		//�����·��
@@ -53,7 +86,7 @@ public class upload extends HttpServlet{
 		
 		
 		//String fileOut = path+File.separator+"upload/";
-		String fileOut = "D:\\opt/test.txt";
+		String fileOut = "/home/save/test.txt";
 		System.out.println("fileOut:"+fileOut+" filename:"+filename);
 		File file = new File(fileOut);
 		//���õ��ֽ���
