@@ -58,8 +58,22 @@
 		</taglib>
 		<!-- <taglib> <taglib-uri>/function</taglib-uri> <taglib-location>/WEB-INF/function.tld</taglib-location> 
 			</taglib> -->
+			
+			<jsp-property-group>
+				
+				<url-pattern>*.jsp</url-pattern>
+				<!-- 在指定的那些jsp将不运行el表达式 -->
+				<el-ignored>false</el-ignored>
+				<page-encoding>utf-8</page-encoding>
+				<include-prelude>/views/test/test2.jsp</include-prelude>
+				<include-coda>/views/test/test2.jsp</include-coda>
+			</jsp-property-group>
 	</jsp-config>
-
+	
+<!-- 	<error-page>
+		<error-code>403</error-code>
+		<location>/views/test/error.jsp</location>
+	</error-page> -->
 	<error-page>
 		<error-code>404</error-code>
 		<location>/views/test/error.jsp</location>
@@ -80,20 +94,34 @@
 		<param-name>email</param-name>
 		<param-value>pengzhengrong123@163.com</param-value>
 	</context-param>
+	
 
 
-	<locale-encoding-mapping-list>
+<!-- 	<locale-encoding-mapping-list>
 		<locale-encoding-mapping>
 			<locale>ja</locale>
 			<encoding>Shift_JIS</encoding>
 		</locale-encoding-mapping>
-	</locale-encoding-mapping-list>
+	</locale-encoding-mapping-list> -->
+
+
+<!-- 如何配置权限拦截 -->
+<!-- 
+1：配置角色为user
+2：配置角色下的角色名称 pzr
+3：配置权限
+ -->
+ 	<security-role>
+		<role-name>user</role-name>
+	</security-role>
 
 	<servlet>
 		<servlet-name>login</servlet-name>
 		<servlet-class>action.Login</servlet-class>
 		<security-role-ref>
+		<!-- pzr对应的角色为user -->
 			<role-name>pzr</role-name>
+			<role-link>user</role-link>
 		</security-role-ref>
 	</servlet>
 	<servlet-mapping>
@@ -103,24 +131,49 @@
 	
 	
 	<!-- 没起到作用 -->
+	<!-- 起到作用了 -->
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>pzr</web-resource-name>
-			<url-pattern>/test.do</url-pattern>
+			<web-resource-name>login</web-resource-name>
+			<!--这里配置的是不能访问的路径 如果请求登入后，被绑定为user角色，然后就无法访问这个路径了  -->
+			<url-pattern>/test2.do</url-pattern>
+			<!-- 没配置 默认所有方法 -->
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
 		</web-resource-collection>
+
 		<auth-constraint>
-			<role-name>pzr</role-name>
+			<role-name>user</role-name>
 		</auth-constraint>
 	</security-constraint>
+	
+	
+	<security-constraint>
+		<web-resource-collection>
+			<web-resource-name>login</web-resource-name>
+			<!-- 这里配置的是不能访问的路径 如果请求登入后，被绑定为user角色，然后就无法访问这个路径了  -->
+			<url-pattern>/test2.do</url-pattern>
+			<!-- 没配置 默认所有方法 -->
+			<http-method>POST</http-method>
+			<http-method>GET</http-method>
+		</web-resource-collection>
+
+		<auth-constraint>
+			<role-name>admin</role-name>
+		</auth-constraint>
+	</security-constraint> 
+	
+
 
 	<!-- 没起到作用 -->
-	<!-- <login-config>
+	<!-- 起作用了 -->
+     <login-config>
 		<auth-method>FORM</auth-method>
 		<form-login-config>
 			<form-login-page>/views/test/index.jsp</form-login-page>
 			<form-error-page>/views/test/error.jsp</form-error-page>
 		</form-login-config>
-	</login-config> -->
+	</login-config>
 
 <!-- 还不知何用 -->
 <!-- 	<mime-mapping>
@@ -131,6 +184,10 @@
  	<listener>
 		<listener-class>listen.context</listener-class>
 	</listener>
+	
+	<session-config>
+		<session-timeout>300</session-timeout>
+	</session-config>
 
 	<welcome-file-list>
 		<welcome-file>

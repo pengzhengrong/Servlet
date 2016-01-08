@@ -19,9 +19,10 @@ public class Test2 extends HttpServlet{
 		String path = req.getContextPath();
 		String header = req.getHeader("HTTP1.1");
 		ServletContext context = getServletContext();
-		String contextUserName = context.getInitParameter("username");
+		String contextUserName = context.getInitParameter("username");         
 		String contextEmail = context.getInitParameter("email");
-		System.out.println(contextUserName+"   "+contextEmail);
+		String contextTest = (String) context.getAttribute("test");
+		System.out.println(contextUserName+"   "+contextEmail+"  "+contextTest);
 		Writer w = resp.getWriter();
 		w.write(path+" header:"+header);
 		resp.sendRedirect("views/test/test.jsp");

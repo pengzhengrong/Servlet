@@ -37,12 +37,12 @@ public class Download extends HttpServlet{
 			        fileName = URLEncoder.encode(fileName, "UTF-8");//IE浏览器
 			       }
 			  }  
-			  response.setContentType("text/plain");
-			  response.setHeader("Location",fileName);
+			  System.out.println(fileName);
+/*			  response.setContentType("text/plain");
+			  response.setHeader("Location",fileName);*/
 			  response.reset();
 			  response.setHeader("Cache-Control", "max-age=0" );
-			  System.out.println(fileName);
-			  response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+			  response.setHeader("Content-Disposition", "attachment; filename=" + new String(fileName.getBytes("utf-8"),"ISO-8859-1"));
 			 BufferedInputStream bis = null;
 			  BufferedOutputStream bos = null;
 			  OutputStream fos = null;
@@ -52,7 +52,7 @@ public class Download extends HttpServlet{
 			     bis = new BufferedInputStream(fis);
 			     fos = response.getOutputStream();
 			     bos = new BufferedOutputStream(fos);
-			int bytesRead = 0;
+			     int bytesRead = 0;
 			     byte[] buffer = new byte[5 * 1024];
 			     while ((bytesRead = bis.read(buffer)) != -1) {
 			         bos.write(buffer, 0, bytesRead);// 将文件发送到客户端
